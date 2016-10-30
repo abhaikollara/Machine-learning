@@ -10,8 +10,8 @@ np.set_printoptions(suppress=True)
 # In[15]:
 
 #Import data
-train_features=np.loadtxt(fname="../Kaggle/datasets/Iris2.csv",skiprows=1,delimiter=',',usecols=(1,2,3,4),dtype='float64')
-train_labels=np.loadtxt(fname="../Kaggle/datasets/Iris2.csv",skiprows=1,delimiter=',',usecols=(5,),dtype='float64')
+train_features=np.loadtxt(fname="/home/abhai/Workbench/datasets/Iris2.csv",skiprows=1,delimiter=',',usecols=(1,2,3,4),dtype='float64')
+train_labels=np.loadtxt(fname="/home/abhai/Workbench/datasets/Iris2.csv",skiprows=1,delimiter=',',usecols=(5,),dtype='float64')
 train_labels = train_labels.reshape(-1, 1)
 
 
