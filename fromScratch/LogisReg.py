@@ -21,7 +21,7 @@ def sigmoid(z):
     return (1/(1+np.exp(-z)))
 
 
-# In[79]:
+# In[103]:
 
 class LogisticRegression:
     
@@ -35,8 +35,8 @@ class LogisticRegression:
     
     def train(self, X, y):
         self.N_ITEMS = X.shape[0]
+        X = np.concatenate((np.ones(self.N_ITEMS).reshape(-1,1),X),axis=1) #Adding bias term
         self.weights = abs(np.random.randn(X.shape[1]).reshape(1,-1))
-
         X, self.xdenom = self.scale(X)
         y, self.ydenom = self.scale(y)
         #Gradient descent
@@ -54,9 +54,9 @@ class LogisticRegression:
         return (self._predict(scaled))
 
 
-# In[81]:
+# In[104]:
 
-test = np.array([[5,3.3,1.4,0.2]],dtype="float64")
+test = np.array([[1,5,3.3,1.4,0.2]],dtype="float64")
 
 model = LogisticRegression()
 model.train(train_features,train_labels)
