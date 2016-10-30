@@ -1,2 +1,2 @@
-# Kaggle
-This repo contains Kaggle competition attempts
+# Machine Learning
+This repo contains beginner level machine learning programs
