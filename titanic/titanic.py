@@ -1,5 +1,9 @@
 import pandas as pd
 import numpy as np
+import random
+from xgboost import XGBClassifier
+from xgboost import plot_importance
+import matplotlib.pyplot as plt
 from sklearn import cross_validation
 from sklearn.preprocessing import LabelEncoder
 from sklearn.ensemble import RandomForestClassifier
@@ -27,9 +31,8 @@ def selectFeatures(data):
 
     data['Person'] = data[['Age','Sex']].apply(get_person,axis=1)
 
-    PersonDummies  = pd.get_dummies(data['Person'])
-    PersonDummies.drop(['male'], axis=1, inplace=True)
-    data = data.join(PersonDummies)
+    # PersonDummies  = pd.get_dummies(data['Person'])
+    # PersonDummies.drop(['male'], axis=1, inplace=True)
 
 
     embarkDummies = pd.get_dummies(data['Embarked'])
@@ -40,7 +43,7 @@ def selectFeatures(data):
     data.drop(['PassengerId','Name','Ticket','Cabin','Sex','SibSp','Person','Embarked','Parch','Fare'],axis=1,inplace=True)
     
     #Fill unavailabe data
-    data['Age'] = data['Age'].fillna(data['Age'].mean())
+    data['Age'] = data['Age'].fillna(random.randint(10,60))
     data['Age'] = data['Age'].astype(int)
 
     return data
@@ -68,15 +71,16 @@ titanic = pd.read_csv("../datasets/Titanictrain.csv")
 data = selectFeatures(titanic)
 trainFeatures, trainLabels = seperate(data)
 
-print data.info()
 
 #Fit and predict
-model = RandomForestClassifier(n_estimators=100)
-# model = LogisticRegression()
-model.fit(trainFeatures, trainLabels)
+# model = RandomForestClassifier(n_estimators=100)
+model = XGBClassifier(n_estimators=100, learning_rate=0.1)
+model.fit(trainFeatures, trainLabels, verbose=True)
 
 accuracies = cross_validation.cross_val_score(model,trainFeatures,trainLabels,cv=6)
-print accuracies
-# print round(accuracies.mean()*100,2)
+
 print ("Score : %.6f" % accuracies.mean())
 submit()
+
+plot_importance(model)
+plt.show()
