@@ -51,7 +51,7 @@ class LogisticRegression:
 
     def predict(self, X):
         scaled = X/self.xdenom
-        return (self._predict(scaled))
+        return np.round(self._predict(scaled))
 
 
 # In[104]:
